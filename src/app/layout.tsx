@@ -4,6 +4,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Providers } from "@/lib/ReactQueryProvider";
+import { Headers } from "@/components/headers/Headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SessionProvider>
-            <Providers>{children}</Providers>
+            <Headers />
+            {children}
           </SessionProvider>
         </ThemeProvider>
       </body>
