@@ -13,10 +13,25 @@ model User {
   email         String?         @unique
   emailVerified DateTime?
   image         String?
+
+  living        String?
+  job           String?
+  bio           String?
+  website       String?
+  school        String?
+
   accounts      Account[]
   sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  followers     Follow[] @relation("followers")
+  following     Follow[] @relation("following")
+  
+  friendships   FriendShip[]
+  friendOf      FriendShip[] @relation("friends")
+  sentFriendRequests     FriendRequest[] @relation("sender")
+  receivedFriendRequests FriendRequest[] @relation("receiver")
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,17 +78,90 @@ model VerificationToken {
   @@unique([identifier, token])
 }
  
-// Optional for WebAuthn support
-model Authenticator {
-  id                   String  @id @default(cuid())
-  credentialID         String  @unique
-  userId               String
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
- 
+// Social Media
+model Post {
+  id String @id @default(cuid())
+  title String?
+  content String?
+  image String?
+  
+  authorId String
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  comments Comment[]
+  likes Like[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id String @id @default(cuid())
+  content String
+  
+  authorId String
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  postId String
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  parentId String?
+  parent Comment? @relation("replies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies Comment[] @relation("replies")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Like {
+  id String @id @default(cuid())
+  authorId String
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  postId String
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([authorId, postId])
+}
+
+model Follow {
+  id String @id @default(cuid())
+  followerId String
+  follower User @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+  
+  followingId String
+  following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([followerId, followingId])
+}
+
+model FriendShip {
+  id String @id @default(cuid())
+  userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  friendId String
+  friend User @relation("friends", fields: [friendId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FriendRequest {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  status     String   // Par exemple: "pending", "accepted", "rejected"
+  sender     User     @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver   User     @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([senderId, receiverId])
 }
