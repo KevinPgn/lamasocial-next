@@ -8,22 +8,22 @@ export const Links = () => {
   const pathname = usePathname()
 
   return <div className="flex items-center gap-8">
-    <Link href="/" className={cn("flex items-center gap-2 text-sm hover:text-purple-400 duration-75", {
-      "text-purple-400": pathname === "/"
+    <Link href="/" className={cn("flex items-center gap-2 text-sm hover:text-[#E0FFE0] duration-75", {
+      "text-[#E0FFE0]": pathname === "/"
     })}>
       <Home size={20} />
       <span>Homepage</span>
     </Link>
-
-    <Link href="/friends" className={cn("flex items-center gap-2 text-sm hover:text-purple-400 duration-75", {
-      "text-purple-400": pathname === "/friends"
+    
+    <Link href="/friends" className={cn("flex items-center gap-2 text-sm hover:text-[#E0FFE0] duration-75", {
+      "text-[#E0FFE0]": pathname === "/friends"
     })}>
       <Users2 size={20} />
       <span>Friends</span>
     </Link>
 
-    <Link href="/stories" className={cn("flex items-center gap-2 text-sm hover:text-purple-400 duration-75", {
-      "text-purple-400": pathname === "/stories"
+    <Link href="/stories" className={cn("flex items-center gap-2 text-sm hover:text-[#E0FFE0] duration-75", {
+      "text-[#E0FFE0]": pathname === "/stories"
     })}>
       <div className="rounded-full p-1 border-dashed border">
         <Plus size={14} />
