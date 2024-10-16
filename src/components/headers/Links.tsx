@@ -7,26 +7,26 @@ import { usePathname } from "next/navigation"
 export const Links = () => {
   const pathname = usePathname()
 
-  return <div className="flex items-center gap-8 max-lg:hidden">
-    <Link href="/" className={cn("flex items-center gap-2 text-sm hover:text-[#E0FFE0] duration-75", {
-      "text-[#E0FFE0]": pathname === "/"
+  return <div className="flex items-center gap-8 max-lg:hidden text-black">
+    <Link href="/" className={cn("flex items-center gap-2 text-sm hover:text-blue-500 duration-75", {
+      "text-blue-500": pathname === "/"
     })}>
       <Home size={20} />
       <span>Homepage</span>
     </Link>
     
-    <Link href="/friends" className={cn("flex items-center gap-2 text-sm hover:text-[#E0FFE0] duration-75", {
-      "text-[#E0FFE0]": pathname === "/friends"
+    <Link href="/friends" className={cn("flex items-center gap-2 text-sm hover:text-blue-500 duration-75", {
+      "text-blue-500": pathname === "/friends"
     })}>
       <Users2 size={20} />
       <span>Friends</span>
     </Link>
 
-    <Link href="/stories" className={cn("flex items-center gap-2 text-sm hover:text-[#E0FFE0] duration-75", {
-      "text-[#E0FFE0]": pathname === "/stories"
+    <Link href="/stories" className={cn("flex items-center gap-2 text-sm hover:text-blue-500 duration-75", {
+      "text-blue-500": pathname === "/stories"
     })}>
-      <div className="rounded-full p-1 border-dashed border">
-        <Plus size={14} />
+      <div className="rounded-full p-1 border-dashed border border-black">
+        <Plus size={13} />
       </div>
       <span>Stories</span>
     </Link>

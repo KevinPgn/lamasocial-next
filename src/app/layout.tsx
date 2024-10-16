@@ -5,7 +5,6 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Providers } from "@/lib/ReactQueryProvider";
 import { Headers } from "@/components/headers/Headers";
-import { SidebarLeft } from "@/components/sidebarLeft/SidebarLeft";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-[#F0F2F5]`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
