@@ -5,14 +5,23 @@ import { Button } from "../ui/button"
 import {Image, Video, BarChartHorizontalBig, Calendar} from "lucide-react"
 
 export const FormPost = ({sessionImage}: {sessionImage: string}) => {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: {errors} } = useForm()
 
   return <div className="w-full shadow-md bg-white rounded-md p-4 mt-5 flex items-start gap-3">
     {/* left */}
     <img src={sessionImage} alt="User profile" className="w-[45px] h-[45px] rounded-full object-cover" />
     {/* mid */}
     <div className="w-full flex flex-col gap-3">
-      <Textarea {...register("content")} className="w-full text-md outline-none border-none bg-gray-100" placeholder="What's on your mind?" />
+      <Textarea 
+        {...register("content", {
+          required: true,
+          minLength: 4,
+          maxLength: 280
+        })} 
+        className="w-full text-md outline-none border-none bg-gray-100" 
+        placeholder="What's on your mind? (4-280 characters)"
+      />
+      {errors.content && <p className="text-red-500 text-sm">Content is required</p>}
     
       <div className="flex items-center gap-5 mt-2">
         <div className="flex items-center gap-1 cursor-pointer">
