@@ -9,7 +9,7 @@ export const FormPost = ({sessionImage}: {sessionImage: string}) => {
 
   return <div className="w-full shadow-md bg-white rounded-md p-4 mt-5 flex items-start gap-3">
     {/* left */}
-    <img src={sessionImage} alt="User profile" className="w-[50px] h-[50px] rounded-full object-cover" />
+    <img src={sessionImage} alt="User profile" className="w-[45px] h-[45px] rounded-full object-cover" />
     {/* mid */}
     <div className="w-full flex flex-col gap-3">
       <Textarea {...register("content")} className="w-full text-md outline-none border-none bg-gray-100" placeholder="What's on your mind?" />
