@@ -11,7 +11,7 @@ export default async function Home() {
     <div className="flex max-w-[1500px] mx-auto gap-8 my-5">
       <SidebarLeft />
 
-      <main className="w-full xl:w-[55%]">
+      <main className="w-full xl:w-[53%]">
         <Stories sessionImage={session?.user?.image || ""} />
         <FormPost sessionImage={session?.user?.image || ""} />
       </main>

@@ -7,7 +7,7 @@ export const Birthdays = () => {
     <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-blue-100"></div>
-            <span className="text-sm font-medium text-gray-500">John Doe</span>
+            <span className="text-sm font-bold">John Doe</span>
         </div>
         <span className="text-sm p-1 bg-blue-500 px-2 rounded-md text-white cursor-pointer font-medium">Celebrate</span>
     </div>
