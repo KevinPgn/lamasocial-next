@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form"
 import { Textarea } from "../ui/textarea"
 import { Button } from "../ui/button"
+import {Image, Video, BarChartHorizontalBig, Calendar} from "lucide-react"
 
 export const FormPost = ({sessionImage}: {sessionImage: string}) => {
   const { register, handleSubmit } = useForm()
@@ -10,7 +11,28 @@ export const FormPost = ({sessionImage}: {sessionImage: string}) => {
     {/* left */}
     <img src={sessionImage} alt="User profile" className="w-[50px] h-[50px] rounded-full object-cover" />
     {/* mid */}
-    <Textarea {...register("content")} className="w-full text-md outline-none border-none bg-gray-100" placeholder="What's on your mind?" />
+    <div className="w-full flex flex-col gap-3">
+      <Textarea {...register("content")} className="w-full text-md outline-none border-none bg-gray-100" placeholder="What's on your mind?" />
+    
+      <div className="flex items-center gap-5 mt-2">
+        <div className="flex items-center gap-1 cursor-pointer">
+            <Image size={20} className="text-blue-300" />
+            <span className="text-sm">Photo</span>
+        </div>
+        <div className="flex items-center gap-1 cursor-pointer">
+            <Video size={20} className="text-red-300" />
+            <span className="text-sm">Video</span>
+        </div>
+        <div className="flex items-center gap-1 cursor-pointer">
+            <BarChartHorizontalBig size={20} className="text-green-300" />
+            <span className="text-sm">Pools</span>
+        </div>
+        <div className="flex items-center gap-1 cursor-pointer">
+            <Calendar size={20} className="text-yellow-300" />
+            <span className="text-sm">Event</span>
+        </div>
+      </div>
+    </div>
     {/* right */}
     <div className="flex flex-col gap-2">
       <span className="text-lg">😊</span>
