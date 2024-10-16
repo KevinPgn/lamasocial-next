@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 export const Links = () => {
   const pathname = usePathname()
 
-  return <div className="flex items-center gap-8">
+  return <div className="flex items-center gap-8 max-lg:hidden">
     <Link href="/" className={cn("flex items-center gap-2 text-sm hover:text-[#E0FFE0] duration-75", {
       "text-[#E0FFE0]": pathname === "/"
     })}>
