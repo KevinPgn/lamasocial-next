@@ -1,6 +1,12 @@
+"use client"
 import { Button } from "../ui/button"
+import { usePathname } from "next/navigation"
 
 export const Profile = ({session}: {session: any}) => {
+  const pathname = usePathname()
+
+  if(pathname !== "/") return null
+
   return <>
     <div className="w-full shadow-md bg-white rounded-md p-4">
       {/* banner + image profile */}
