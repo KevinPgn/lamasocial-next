@@ -1,3 +1,4 @@
+import { FormPost } from "@/components/mainHome/FormPost";
 import { Stories } from "@/components/mainHome/Stories";
 import { SidebarLeft } from "@/components/sidebarLeft/SidebarLeft";
 import { SidebarRight } from "@/components/sidebarRight/SidebarRight";
@@ -12,6 +13,7 @@ export default async function Home() {
 
       <main className="w-full xl:w-[55%]">
         <Stories sessionImage={session?.user?.image || ""} />
+        <FormPost sessionImage={session?.user?.image || ""} />
       </main>
 
      <SidebarRight />
