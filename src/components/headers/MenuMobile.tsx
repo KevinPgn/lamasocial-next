@@ -7,7 +7,7 @@ export const MenuMobile = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return <>
-    <Menu size={25} className="cursor-pointer text-[#E0FFE0] duration-75" onClick={() => setIsOpen(!isOpen)} />
+    <Menu size={25} className="cursor-pointer text-[#E0FFE0] duration-75 max-lg:block hidden" onClick={() => setIsOpen(!isOpen)} />
 
     {isOpen && (
       <div className="absolute top-0 left-0 w-full h-full bg-[#181616]/70 backdrop-blur-sm flex flex-col items-center justify-center gap-7">
