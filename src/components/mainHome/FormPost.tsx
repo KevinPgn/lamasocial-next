@@ -7,7 +7,11 @@ import {Image, Video, BarChartHorizontalBig, Calendar} from "lucide-react"
 export const FormPost = ({sessionImage}: {sessionImage: string}) => {
   const { register, handleSubmit, formState: {errors} } = useForm()
 
-  return <div className="w-full shadow-md bg-white rounded-md p-4 mt-5 flex items-start gap-3">
+  const onSubmit = (data: any) => {
+    console.log(data)
+  }
+
+  return <form onSubmit={handleSubmit(onSubmit)} className="w-full shadow-md bg-white rounded-md p-4 mt-5 flex items-start gap-3">
     {/* left */}
     <img src={sessionImage} alt="User profile" className="w-[45px] h-[45px] rounded-full object-cover" />
     {/* mid */}
@@ -45,7 +49,7 @@ export const FormPost = ({sessionImage}: {sessionImage: string}) => {
     {/* right */}
     <div className="flex flex-col gap-2">
       <span className="text-lg">😊</span>
-      <Button className="bg-blue-500 hover:bg-blue-600">Send</Button>
+      <Button type="submit" className="bg-blue-500 hover:bg-blue-600">Send</Button>
     </div>
-  </div>
+  </form>
 }
