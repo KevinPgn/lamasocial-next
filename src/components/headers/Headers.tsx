@@ -8,7 +8,7 @@ import { MenuMobile } from './MenuMobile'
 export const Headers = async () => {
   const session = await getSession()
 
-  return <header className="h-[85px] shadow-md bg-[#181616] max-xl:px-4">
+  return <header className="h-[85px] bg-[#181616] max-xl:px-4">
     <nav className="h-full max-w-[1500px] mx-auto flex items-center justify-between">
         <Link href="/">
             <h2 className="text-xl font-bold text-[#E0FFE0] uppercase">KevinSocial</h2>

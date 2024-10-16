@@ -30,10 +30,7 @@ export default function RootLayout({
         >
           <SessionProvider>
             <Headers />
-            <div className="flex max-w-[1500px] mx-auto">
-              <SidebarLeft />
-              {children}
-            </div>
+            {children}
           </SessionProvider>
         </ThemeProvider>
       </body>
