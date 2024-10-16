@@ -9,7 +9,7 @@ export const Profile = ({session}: {session: any}) => {
           src={session?.user?.image || ""} 
           alt="profile" 
           loading="lazy" 
-          className="w-[60px] h-[60px] rounded-full absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 border-4 border-white" 
+          className="w-[57px] h-[57px] rounded-full absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 border-4 border-white" 
         />
       </div>
       <p className="text-center font-bold text-lg">{session?.user?.name}</p>
