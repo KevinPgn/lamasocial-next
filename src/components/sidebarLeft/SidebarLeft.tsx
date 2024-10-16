@@ -7,7 +7,7 @@ import { Profile } from "./Profile"
 export const SidebarLeft = async () => {
   const session = await getSession()
 
-  return <aside className="w-[19%] xl:flex flex-col gap-4 hidden">
+  return <aside className="w-[20%] xl:flex flex-col gap-4 hidden">
     <Profile session={session} />
     <LinksSidebar />
     <Publicity />
