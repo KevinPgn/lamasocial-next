@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 export const LinksSidebar = () => {
   const pathname = usePathname()
 
-  return <div className="w-full flex flex-col gap-3 shadow-md bg-white rounded-md p-4 my-4">
+  return <div className="w-full flex flex-col gap-3 shadow-md bg-white rounded-md p-4">
     <div className={cn("flex items-center gap-3 p-2 hover:bg-gray-100 duration-75 rounded-md cursor-pointer", pathname === "/" && "bg-gray-100")}>
         <ArrowsUpFromLine size={20} className={cn("text-gray-500", pathname === "/" && "text-blue-500")}/>
         <span className={cn("text-md text-gray-500", pathname === "/" && "text-blue-500")}>My Posts</span>
