@@ -5,6 +5,18 @@ import { authenticatedAction } from "@/lib/safe-actions"
 import { revalidatePath } from "next/cache"
 import { cache } from "react"
 /*
+model FriendShip {
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  friendId String
+  friend User @relation("friends", fields: [friendId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model FriendRequest {
   id         String   @id @default(cuid())
   senderId   String
@@ -50,8 +62,8 @@ export const addUserToFriend = authenticatedAction
     }
   })
 
-export const acceptFriendRequest = authenticatedAction
-  .schema(z.object({
+export const acceptTheFriends = authenticatedAction
+  .schema(z.object({  
     friendRequestId: z.string()
   }))
   .action(async ({parsedInput:{friendRequestId}, ctx:{userId: currentUserId}}) => {
@@ -73,7 +85,7 @@ export const acceptFriendRequest = authenticatedAction
       }
     }
 
-    const acceptFriendRequest = await prisma.friendRequest.update({
+    const acceptTheFriends = await prisma.friendRequest.update({
       where:{
         id: friendRequestId
       },
@@ -82,13 +94,23 @@ export const acceptFriendRequest = authenticatedAction
       }
     })
 
-    return {
-      acceptFriendRequest,
-      success: "Friend request accepted"
+    if(acceptTheFriends) {
+      const createFriendShip = await prisma.friendShip.create({
+        data:{
+          userId: currentUserId,
+          friendId: friendRequest.senderId
+        }
+      })
+
+      if(createFriendShip) {
+        return {
+          success: "Friendship created"
+        }
+      }
     }
   })
 
-export const rejectFriendRequest = authenticatedAction
+export const denyTheFriends = authenticatedAction
   .schema(z.object({
     friendRequestId: z.string()
   }))
@@ -110,20 +132,47 @@ export const rejectFriendRequest = authenticatedAction
         error: "You are not the receiver of this friend request"
       }
     }
-    
-    const rejectFriendRequest = await prisma.friendRequest.update({
+
+    const deleteTheFriendsRequest = await prisma.friendRequest.delete({
       where:{
         id: friendRequestId
-      },
-      data:{
-        status: "rejected"
       }
     })
 
-    return {
-      rejectFriendRequest,
-      success: "Friend request rejected"
+    if(deleteTheFriendsRequest) {
+      return {
+        success: "Friend request denied"
+      }
     }
   })
 
+export const removeFriend = authenticatedAction
+  .schema(z.object({
+    friendId: z.string()
+  }))
+  .action(async ({parsedInput:{friendId}, ctx:{userId: currentUserId}}) => {
+    const friendShip = await prisma.friendShip.findFirst({
+      where:{
+        userId: currentUserId,
+        friendId: friendId
+      }
+    })
 
+    if(!friendShip) {
+      return {
+        error: "Friendship not found"
+      }
+    }
+
+    const removeFriend = await prisma.friendShip.delete({
+      where:{
+        id: friendShip.id
+      }
+    })
+
+    if(removeFriend) {
+      return {
+        success: "Friend removed"
+      }
+    }
+  })
