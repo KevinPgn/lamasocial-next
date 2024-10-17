@@ -4,6 +4,7 @@ import { CommentForm } from "./CommentForm"
 import { LikePost } from "./LikePost"
 import { SharePost } from "./SharePost"
 import { Ellipsis } from "./Ellipsis"
+import {Ellipsis as EllipsisIcon} from "lucide-react"
 
 export const Post = ({post, currentUserConnected}: {post: any, currentUserConnected: any}) => {
   return <div className="w-full relative shadow-md gap-5 bg-white rounded-lg p-4 my-8">
@@ -35,16 +36,19 @@ export const Post = ({post, currentUserConnected}: {post: any, currentUserConnec
     {currentUserConnected ? <CommentForm postId={post.id} userImage={currentUserConnected.user.image}/> : null}
 
     {post.comments.map((comment: any) => (
-        <div className="flex flex-col gap-3 p-3 my-3">
-            <div className="flex items-start gap-4">
-                <img src={comment.author.image} alt="User profile" className="w-9 h-9 rounded-full" />
-                <div className="flex flex-col">
-                    <div className="flex items-center gap-3">
-                        <h1 className="text-sm font-semibold">{comment.author.name}</h1>
-                        <p className="text-sm text-gray-500">{formatDistance(new Date(comment.createdAt), new Date(), { addSuffix: true })}</p>
+        <div className="flex flex-col gap-3 p-3 my-4">
+            <div className="flex items-start justify-between gap-4">
+                <div className="flex items-center gap-3">
+                    <img src={comment.author.image} alt="User profile" className="w-9 h-9 rounded-full" />
+                    <div className="flex flex-col">
+                        <div className="flex items-center gap-3">
+                            <h1 className="text-sm font-semibold">{comment.author.name}</h1>
+                            <p className="text-sm text-gray-500">{formatDistance(new Date(comment.createdAt), new Date(), { addSuffix: true })}</p>
+                        </div>
+                        <p className="text-sm mt-1 font-medium">{comment.content}</p>
                     </div>
-                    <p className="text-sm mt-2 font-medium">{comment.content}</p>
                 </div>
+                {currentUserConnected.user.id === comment.author.id ? <EllipsisIcon size={17} className="cursor-pointer text-gray-500" /> : null}
             </div>
         </div>
     ))}
