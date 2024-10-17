@@ -14,10 +14,10 @@ export const FriendsRequests = () => {
                 <span className="text-sm font-medium text-gray-500">John Doe</span>
             </div>
             <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-green-100 cursor-pointer">
+                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-green-100 cursor-pointer hover:bg-green-200 duration-75">
                     <Check size={17} className="text-green-500" />
                 </div>
-                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-red-100 cursor-pointer">
+                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-red-100 cursor-pointer hover:bg-red-200 duration-75">
                     <X size={17} className="text-red-500" />
                 </div>
             </div>
@@ -29,10 +29,10 @@ export const FriendsRequests = () => {
                 <span className="text-sm font-medium text-gray-500">John Doe</span>
             </div>
             <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-green-100 cursor-pointer">
+                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-green-100 cursor-pointer hover:bg-green-200 duration-75">
                     <Check size={17} className="text-green-500" />
                 </div>
-                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-red-100 cursor-pointer">
+                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-red-100 cursor-pointer hover:bg-red-200 duration-75">
                     <X size={17} className="text-red-500" />
                 </div>
             </div>
@@ -44,10 +44,10 @@ export const FriendsRequests = () => {
                 <span className="text-sm font-medium text-gray-500">John Doe</span>
             </div>
             <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-green-100 cursor-pointer">
+                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-green-100 cursor-pointer hover:bg-green-200 duration-75">
                     <Check size={17} className="text-green-500" />
                 </div>
-                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-red-100 cursor-pointer">
+                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-red-100 cursor-pointer hover:bg-red-200 duration-75">
                     <X size={17} className="text-red-500" />
                 </div>
             </div>
