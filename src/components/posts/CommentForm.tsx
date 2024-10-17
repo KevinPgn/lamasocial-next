@@ -6,12 +6,13 @@ import {ToastContainer, toast} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 export const CommentForm = ({postId, userImage}: {postId: string, userImage: string}) => {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
   const onSubmit = async (data: any) => {
     try{
       await commentPost({postId, content: data.comment})
       toast.success("Commentaire ajouté")
+      reset()
     }catch(error){
       toast.error("Erreur lors de l'ajout du commentaire")
     }
@@ -26,7 +27,9 @@ export const CommentForm = ({postId, userImage}: {postId: string, userImage: str
           {...register("comment", { required: true, minLength: 4, maxLength: 200 })}
           className="bg-transparent border-none focus:outline-none"
         />
+        {errors.comment && <span className="text-red-500">Le commentaire doit contenir entre 4 et 200 caractères</span>}
         <span className="text-md mr-5 cursor-pointer">😃</span>
+        <button hidden type="submit"></button>
     </form>
     <ToastContainer />
   </div>
