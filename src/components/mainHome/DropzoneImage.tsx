@@ -1,8 +1,7 @@
 "use client"
 import { UploadDropzone } from "../utils/uploadthing"
 
-export const FormImage = ({setImage, image, setIsActive}: {setImage: (image: string) => void, image: string, setIsActive: (isActive: boolean) => void}) => {
-  
+export const DropzoneImage = ({setImage, image, setIsActive}: {setImage: (image: string) => void, image: string, setIsActive: (isActive: boolean) => void}) => {
   return <div 
   onClick={() => setIsActive(false)}  
   className="absolute top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center">

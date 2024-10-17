@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { Textarea } from "../ui/textarea"
 import { Button } from "../ui/button"
 import {Image, Video, BarChartHorizontalBig, Calendar} from "lucide-react"
-import { FormImage } from "./FormImage"
+import { DropzoneImage } from "./DropzoneImage"
 import { useState } from "react"
 import {createPost} from "@/server/CreatePost.action"
 
@@ -69,6 +69,6 @@ export const FormPost = ({sessionImage}: {sessionImage: string}) => {
     </div>
   </form>
 
-  {isActive && <FormImage setImage={setImage} image={image} setIsActive={setIsActive}/>}
+  {isActive && <DropzoneImage setImage={setImage} image={image} setIsActive={setIsActive}/>}
   </div>
 }
