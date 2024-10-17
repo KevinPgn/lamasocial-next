@@ -18,7 +18,7 @@ export default async function Home() {
         <Stories sessionImage={session?.user?.image || ""} />
         <FormPost sessionImage={session?.user?.image || ""} />
         {posts.map((post) => (
-          <Post key={post.id} post={post} />
+          <Post key={post.id} post={post} currentUserConnected={session}/>
         ))}
       </main>
 

@@ -17,6 +17,7 @@ export const getAllPosts = cache(async () => {
             title: true,
             content: true,
             image: true,
+            createdAt: true,
             author: {
                 select: {
                     id: true,
