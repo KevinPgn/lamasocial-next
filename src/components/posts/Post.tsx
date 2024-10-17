@@ -1,11 +1,13 @@
 import {formatDistance} from "date-fns"
-import { Flame, MessageCircle, Send } from "lucide-react"
+import { MessageCircle } from "lucide-react"
 import { CommentForm } from "./CommentForm"
 import { LikePost } from "./LikePost"
 import { SharePost } from "./SharePost"
+import { Ellipsis } from "./Ellipsis"
 
 export const Post = ({post, currentUserConnected}: {post: any, currentUserConnected: any}) => {
-  return <div className="w-full shadow-md gap-5 bg-white rounded-lg p-4 my-8">
+  return <div className="w-full relative shadow-md gap-5 bg-white rounded-lg p-4 my-8">
+    {currentUserConnected.user.id === post.author.id ? <Ellipsis /> : null}
     <div className="flex items-center gap-3">
         <img src={post.author.image} alt="User profile" className="w-9 h-9 rounded-full" />
         <div>
