@@ -5,11 +5,12 @@ import { LikePost } from "./LikePost"
 import { SharePost } from "./SharePost"
 import { Ellipsis } from "./Ellipsis"
 import {Ellipsis as EllipsisIcon} from "lucide-react"
+import Link from "next/link"
 
 export const Post = ({post, currentUserConnected}: {post: any, currentUserConnected: any}) => {
   return <div className="w-full relative shadow-md gap-5 bg-white rounded-lg p-4 my-8">
     {currentUserConnected.user.id === post.author.id ? <Ellipsis /> : null}
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 mb-2">
         <img src={post.author.image} alt="User profile" className="w-9 h-9 rounded-full" />
         <div>
             <h1 className="text-md font-semibold">{post.author.name}</h1>
@@ -18,7 +19,7 @@ export const Post = ({post, currentUserConnected}: {post: any, currentUserConnec
     </div>
     {post.title ? <h1 className="text-lg font-semibold my-3">{post.title}</h1> : null}
     {post.image ? <img src={post.image} alt="Post image" loading="lazy" className="w-full h-[450px] object-cover my-3 rounded-lg" /> : null}
-    <p className="text-md font-medium my-2">{post.content}</p>
+    <Link href={`/posts/${post.id}`} className="text-md font-medium">{post.content}</Link>
 
     <div className="flex items-center justify-between my-5 w-full">
         <div className="flex items-center gap-7 w-full">
