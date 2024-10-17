@@ -5,7 +5,11 @@ import { authenticatedAction } from "@/lib/safe-actions"
 import { revalidatePath } from "next/cache"
 import { cache } from "react"
 import { getSession } from "@/components/utils/CacheSession"
+
 export const getUserProfile = cache(async (userId: string) => {
+    const session = await getSession()
+    const currentUserId = session?.user?.id
+
     const user = await prisma.user.findUnique({
         where: {
             id: userId
@@ -30,6 +34,13 @@ export const getUserProfile = cache(async (userId: string) => {
                 }
             },
 
+            ...(currentUserId ? {
+                followers: {
+                    where: {
+                        followerId: currentUserId
+                    }
+                }
+            } : {}),
         }
     })
 
@@ -37,7 +48,10 @@ export const getUserProfile = cache(async (userId: string) => {
         return null
     }
 
-    return user
+    return {
+        ...user,
+        isFollowing: currentUserId ? user.followers.length > 0 : false,
+    }
 })
 
 export const getUserPosts = cache(async (userId: string) => {
