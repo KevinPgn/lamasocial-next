@@ -2,7 +2,7 @@
 import { Button } from "../ui/button"
 import { usePathname } from "next/navigation"
 
-export const Profile = ({session}: {session: any}) => {
+export const Profile = ({session, numberFollow}: {session: any, numberFollow: number}) => {
   const pathname = usePathname()
 
   if(pathname !== "/") return null
@@ -27,7 +27,7 @@ export const Profile = ({session}: {session: any}) => {
             <div className="w-4 h-4 rounded-full bg-red-500"></div>
         </div>
 
-        <span className="text-xs font-medium">100 followers</span>
+        <span className="text-xs font-medium">{numberFollow} followers</span>
       </div>
       <Button className="w-fit flex items-center justify-center mx-auto bg-blue-500 hover:bg-blue-600 duration-75 mt-4">My Profile</Button>
     </div>
