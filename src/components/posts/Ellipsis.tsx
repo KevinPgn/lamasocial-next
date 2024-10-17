@@ -12,7 +12,7 @@ export const Ellipsis = ({postId}: {postId: string}) => {
     <DropdownMenuTrigger>
       <EllipsisIcon size={20} className="cursor-pointer" />
     </DropdownMenuTrigger>
-    <DropdownMenuContent className="w-40 rounded-xl px-2 py-3">
+    <DropdownMenuContent className="w-36 rounded-xl px-2 py-3">
       <DropdownMenuItem className="cursor-pointer font-semibold hover:bg-gray-100">View</DropdownMenuItem>
       <DropdownMenuItem className="cursor-pointer font-semibold hover:bg-gray-100">Re-post</DropdownMenuItem>
       <DropdownMenuItem className="text-red-400 hover:bg-red-100 cursor-pointer font-semibold" onClick={handleDeletePost}>Delete</DropdownMenuItem>
