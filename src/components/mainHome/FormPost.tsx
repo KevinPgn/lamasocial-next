@@ -8,13 +8,15 @@ import { useState } from "react"
 import {createPost} from "@/server/CreatePost.action"
 
 export const FormPost = ({sessionImage}: {sessionImage: string}) => {
-  const { register, handleSubmit, formState: {errors} } = useForm()
+  const { register, handleSubmit, reset, formState: {errors} } = useForm()
   const [isActive, setIsActive] = useState(false)
   const [image, setImage] = useState<string>("")
 
   const onSubmit = async (data: any) => {
     try {
-      console.log(data)
+      await createPost({ content: data.content, image: image })
+      reset()
+      setImage("")
     } catch (error) {
       console.log(error)
     }
@@ -27,6 +29,7 @@ export const FormPost = ({sessionImage}: {sessionImage: string}) => {
     <img src={sessionImage} alt="User profile" className="w-[45px] h-[45px] rounded-full object-cover" />
     {/* mid */}
     <div className="w-full flex flex-col gap-3">
+      {image && <img src={image} alt="Post image" className="w-[200px] h-[200px] object-cover" />}
       <Textarea 
         {...register("content", {
           required: true,

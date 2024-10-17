@@ -1,6 +1,6 @@
 "use client"
-import { OurFileRouter } from "@/app/api/uploadthing/core"
-import { UploadDropzone } from "@uploadthing/react"
+import { UploadDropzone } from "../utils/uploadthing"
+
 export const FormImage = ({setImage, image, setIsActive}: {setImage: (image: string) => void, image: string, setIsActive: (isActive: boolean) => void}) => {
   
   return <div 
@@ -9,11 +9,14 @@ export const FormImage = ({setImage, image, setIsActive}: {setImage: (image: str
     <div
     onClick={(e) => e.stopPropagation()}
     className="bg-white rounded-md p-4">
-        <UploadDropzone<OurFileRouter, "imageUploader">
+        <UploadDropzone
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
         if(res) {
             setImage(res[0].url)
+            if(res[0].url){
+                setIsActive(false)
+            }
         }
         }}
         onUploadError={(error: Error) => {
