@@ -1,8 +1,11 @@
 import { SidebarLeft } from '@/components/sidebarLeft/SidebarLeft'
 import { SidebarRight } from '@/components/sidebarRight/SidebarRight'
 import { getUserProfileWithPosts } from '@/server/GetUserProfile.action'
+import { getSession } from '@/components/utils/CacheSession'
 
 const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
+  const session = await getSession()
+  const currentUserId = session?.user?.id
   const { profile, posts } = await getUserProfileWithPosts(params.userId)
 
   return (
@@ -13,7 +16,7 @@ const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
         
       </main>
 
-      <SidebarRight profile={profile}/>
+      <SidebarRight profile={profile} currentUserId={currentUserId}/>
     </div>
   )
 }

@@ -1,7 +1,9 @@
 //! name, bio, living, job, school, website, image => les données de l'utilisateur via le props profileInformations
 import { MapPin, GraduationCap, Briefcase, Link, Calendar } from "lucide-react"
 import { format } from "date-fns"
-export const UserProfile = ({ profileInformations }: { profileInformations: any }) => {
+import { Button } from "@/components/ui/button"
+
+export const UserProfile = ({ profileInformations, currentUserId }: { profileInformations: any, currentUserId?: string }) => {
   return <div className="w-full flex flex-col gap-3 shadow-md bg-white rounded-md p-4">
     <span className="text-sm font-semibold text-gray-500">User information</span>
     <div className="flex items-center gap-3">
@@ -36,5 +38,13 @@ export const UserProfile = ({ profileInformations }: { profileInformations: any 
        <p className="text-sm text-gray-500">Joined : {format(new Date(profileInformations.createdAt), "dd/MM/yyyy")}</p>
       </div>
     </div>
+      {currentUserId === profileInformations.id ? (
+        <Button className="w-full mt-3">Edit profile</Button>
+      ) : (
+        <div className="flex items-center gap-2 mt-3">
+          <Button className="w-[50%]">Add friend</Button>
+          <Button className="w-[50%]">Follow</Button>
+        </div>
+      )}
   </div>
 }
