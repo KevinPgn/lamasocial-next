@@ -9,8 +9,8 @@ import Link from "next/link"
 
 export const Post = ({post, currentUserConnected}: {post: any, currentUserConnected: any}) => {
   return <div className="w-full relative shadow-md gap-5 bg-white rounded-lg p-4 my-8">
-    <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-3">
+    <div className="flex items-center justify-between w-full mb-2">
+        <div className="flex items-center gap-3 w-full">
             <img src={post.author.image} alt="User profile" className="w-9 h-9 rounded-full" />
             <div>
                 <h1 className="text-md font-semibold">{post.author.name}</h1>

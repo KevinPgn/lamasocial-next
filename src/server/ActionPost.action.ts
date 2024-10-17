@@ -31,3 +31,24 @@ export const likePost = authenticatedAction
         revalidatePath(`/post/${postId}`)
         return { success: true }
     })
+
+// Delete a post
+export const deletePost = authenticatedAction
+    .schema(z.object({
+        postId: z.string()
+    }))
+    .action(async({parsedInput: {postId}, ctx:{userId}}) => {
+        const post = await prisma.post.findUnique({ where: { id: postId } })
+        if(!post){
+            throw new Error("Post not found")
+        }
+        
+        if(post.authorId !== userId){
+            throw new Error("You are not the author of this post")
+        }
+
+        await prisma.post.delete({ where: { id: postId } })
+
+        revalidatePath(`/post/${postId}`)
+        return { success: true }
+    })
