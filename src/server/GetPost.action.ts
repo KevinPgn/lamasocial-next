@@ -25,6 +25,39 @@ export const getAllPosts = cache(async () => {
                     image: true,
                 }
             },
+            // select 5 comments    
+            comments: {
+                select: {
+                    id: true,
+                    content: true,
+                    createdAt: true,
+                    author: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true,
+                        }
+                    },
+                    replies: {
+                        select: {
+                            id: true,
+                            content: true,
+                            createdAt: true,
+                            author: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    image: true,
+                                }
+                            }
+                        }
+                    }
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+                take: 5,
+            },
             _count: {
                 select: {
                     comments: true,
