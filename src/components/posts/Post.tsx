@@ -1,6 +1,7 @@
 import {formatDistance} from "date-fns"
 import { Flame, MessageCircle, Send } from "lucide-react"
 import { CommentForm } from "./CommentForm"
+import { LikePost } from "./LikePost"
 
 export const Post = ({post, currentUserConnected}: {post: any, currentUserConnected: any}) => {
   return <div className="w-full shadow-md gap-5 bg-white rounded-lg p-4 my-8">
@@ -18,11 +19,7 @@ export const Post = ({post, currentUserConnected}: {post: any, currentUserConnec
     <div className="flex items-center justify-between my-5">
         <div className="flex items-center gap-7">
             {/* number of likes and comments */}
-            <div className="flex items-center gap-2 p-2 px-3 bg-red-100 rounded-lg cursor-pointer hover:bg-red-200 duration-75">
-                <Flame size={20} className="text-red-500" />
-                <div className="w-[1px] h-[20px] bg-red-700"></div>
-                <span className="text-sm font-semibold text-red-500">{post._count.likes} likes</span>
-            </div>
+            <LikePost postId={post.id} isLiked={post.isLiked} postLikes={post._count.likes}/>
             <div className="flex items-center gap-2 p-2 px-3 bg-blue-100 rounded-lg cursor-pointer hover:bg-blue-200 duration-75">
                 <MessageCircle size={20} className="text-blue-500" />
                 <div className="w-[1px] h-[20px] bg-blue-700"></div>
