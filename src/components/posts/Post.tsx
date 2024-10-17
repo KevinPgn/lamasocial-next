@@ -37,7 +37,7 @@ export const Post = ({post, currentUserConnected}: {post: any, currentUserConnec
     {currentUserConnected ? <CommentForm postId={post.id} userImage={currentUserConnected.user.image}/> : null}
 
     {post.comments.map((comment: any) => (
-        <div className="flex flex-col gap-3 p-3 my-4">
+        <div className="flex flex-col gap-3 p-3 mt-4">
             <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
                     <img src={comment.author.image} alt="User profile" className="w-9 h-9 rounded-full" />
