@@ -14,8 +14,8 @@ export const Post = ({post, currentUserConnected}: {post: any, currentUserConnec
         </div>
     </div>
     {post.title ? <h1 className="text-lg font-semibold my-3">{post.title}</h1> : null}
-    {post.image ? <img src={post.image} alt="Post image" className="w-full h-[450px] object-cover my-3 rounded-lg" /> : null}
-    <p className="text-md font-medium">{post.content}</p>
+    {post.image ? <img src={post.image} alt="Post image" loading="lazy" className="w-full h-[450px] object-cover my-3 rounded-lg" /> : null}
+    <p className="text-md font-medium my-2">{post.content}</p>
 
     <div className="flex items-center justify-between my-5 w-full">
         <div className="flex items-center gap-7 w-full">
