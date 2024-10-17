@@ -5,8 +5,7 @@ import "react-toastify/dist/ReactToastify.css"
 
 export const SharePost = ({postId}: {postId: string}) => {
   const handleCopy = () => {
-    const url = window.location.href
-    navigator.clipboard.writeText(url)
+    navigator.clipboard.writeText(`${window.location.origin}/post/${postId}`)
     toast.success("Link copied to clipboard")
   }
 
