@@ -4,9 +4,13 @@ import {z} from "zod"
 import { authenticatedAction } from "@/lib/safe-actions"
 import { revalidatePath } from "next/cache"
 import { cache } from "react"
+import { getSession } from "@/components/utils/CacheSession"
 
 // Get all posts
 export const getAllPosts = cache(async () => {
+    const session = await getSession()
+    const currentUserId = session?.user?.id
+
     const posts = await prisma.post.findMany({
         select: {
             id: true,
@@ -23,14 +27,24 @@ export const getAllPosts = cache(async () => {
             _count: {
                 select: {
                     comments: true,
-                    likes: true,
+                    likes: true
                 }
-            }
+            },
+            ...(currentUserId ? {
+                likes: {
+                    where: { authorId: currentUserId },
+                    select: { id: true }
+                }
+            } : {}),
         },
         orderBy: {
             createdAt: "desc",
         },
         take: 10,
     })
-    return posts
+
+    return posts.map((post) => ({
+        ...post,
+        isLiked: currentUserId ? post.likes.length > 0 : false,
+    }))
 })
