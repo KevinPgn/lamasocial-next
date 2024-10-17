@@ -3,15 +3,26 @@ import { useForm } from "react-hook-form"
 import { Textarea } from "../ui/textarea"
 import { Button } from "../ui/button"
 import {Image, Video, BarChartHorizontalBig, Calendar} from "lucide-react"
+import { FormImage } from "./FormImage"
+import { useState } from "react"
+import {createPost} from "@/server/CreatePost.action"
 
 export const FormPost = ({sessionImage}: {sessionImage: string}) => {
   const { register, handleSubmit, formState: {errors} } = useForm()
+  const [isActive, setIsActive] = useState(false)
+  const [image, setImage] = useState<string>("")
 
-  const onSubmit = (data: any) => {
-    console.log(data)
+  const onSubmit = async (data: any) => {
+    try {
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  return <form onSubmit={handleSubmit(onSubmit)} className="w-full shadow-md bg-white rounded-md p-4 mt-5 flex items-start gap-3">
+  return <div
+  className="w-full shadow-md bg-white rounded-md p-4 mt-5 flex items-start gap-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex items-start gap-3 w-full">
     {/* left */}
     <img src={sessionImage} alt="User profile" className="w-[45px] h-[45px] rounded-full object-cover" />
     {/* mid */}
@@ -28,7 +39,9 @@ export const FormPost = ({sessionImage}: {sessionImage: string}) => {
       {errors.content && <p className="text-red-500 text-sm">Content is required</p>}
     
       <div className="flex items-center gap-5 mt-2">
-        <div className="flex items-center gap-1 cursor-pointer">
+        <div
+        onClick={() => setIsActive(!isActive)}
+        className="flex items-center gap-1 cursor-pointer">
             <Image size={20} className="text-blue-300" />
             <span className="text-sm">Photo</span>
         </div>
@@ -52,4 +65,7 @@ export const FormPost = ({sessionImage}: {sessionImage: string}) => {
       <Button type="submit" className="bg-blue-500 hover:bg-blue-600">Send</Button>
     </div>
   </form>
+
+  {isActive && <FormImage setImage={setImage} image={image} setIsActive={setIsActive}/>}
+  </div>
 }
