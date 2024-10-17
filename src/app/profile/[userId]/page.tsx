@@ -13,7 +13,7 @@ const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
         
       </main>
 
-      <SidebarRight />
+      <SidebarRight profile={profile}/>
     </div>
   )
 }
