@@ -106,3 +106,29 @@ export const deleteTheFriendship = authenticatedAction
 
     revalidatePath(`/profile/${userId}`)
   })
+
+  // get all friends requests
+  export const getAllFriendsRequests = authenticatedAction
+    .schema(z.object({}))
+    .action(async ({ctx:{userId}}) => {
+      const friendsRequests = await prisma.friendRequest.findMany({
+        where: {
+          receiverId: userId,
+        },
+        select: {
+          sender: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            }
+          }
+        },
+        take: 5,
+        orderBy: {
+          createdAt: 'desc'
+        }
+      })
+
+      return friendsRequests
+    })
