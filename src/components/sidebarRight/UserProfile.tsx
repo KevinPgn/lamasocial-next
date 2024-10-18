@@ -4,6 +4,7 @@ import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { EditProfile } from "../utilitaire/EditProfile"
 import { FollowBtn } from "../utilitaire/FollowBtn"
+import { AddFriend } from "../utilitaire/AddFriend"
 
 export const UserProfile = ({ profileInformations, currentUserConnected }: { profileInformations: any, currentUserConnected?: any }) => {
   const isFollowing = profileInformations.isFollowing
@@ -46,7 +47,7 @@ export const UserProfile = ({ profileInformations, currentUserConnected }: { pro
         <EditProfile profileInformations={profileInformations}/>
       ) : (
         <div className="flex items-center gap-2 mt-3">
-          <Button className="w-[50%]">Add friend</Button>
+          <AddFriend userId={profileInformations.id} />
           <FollowBtn userId={profileInformations.id} isFollowing={isFollowing} />
         </div>
       )}
