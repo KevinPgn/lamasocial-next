@@ -28,8 +28,8 @@ export const sendFriendRequest = authenticatedAction
     const existingFriendRequest = await prisma.friendRequest.findFirst({
       where: {
         OR: [
-          { senderId: currentUserId, receiverId: userId },
           { senderId: userId, receiverId: currentUserId },
+          { senderId: currentUserId, receiverId: userId },
         ]
       }
     })
@@ -64,8 +64,8 @@ export const acceptTheFriendRequest = authenticatedAction
     await prisma.friendRequest.delete({
       where: {
         senderId_receiverId: {
-          senderId: currentUserId,
-          receiverId: userId,
+          senderId: userId,
+          receiverId: currentUserId,
         }
       }
     })
@@ -81,8 +81,8 @@ export const rejectTheFriendRequest = authenticatedAction
     await prisma.friendRequest.delete({
       where: {
         senderId_receiverId: {
-          senderId: currentUserId,
-          receiverId: userId,
+          senderId: userId,
+          receiverId: currentUserId,
         }
       }
     })
