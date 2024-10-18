@@ -43,9 +43,10 @@ export const getUserProfile = cache(async (userId: string) => {
             } : {}),
 
             ...(currentUserId ? {
-                friendships: {
+                friendOf: {
                     where: {
-                        userId: currentUserId
+                        userId: currentUserId,
+                        friendId: userId
                     }
                 }
             } : {}),
@@ -58,8 +59,8 @@ export const getUserProfile = cache(async (userId: string) => {
 
     return {
         ...user,
-        isFriend: currentUserId ? user.friendships.length > 0 : false,
         isFollowing: currentUserId ? user.followers.length > 0 : false,
+        isFriend: currentUserId ? user.friendOf.length > 0 : false,
     }
 })
 

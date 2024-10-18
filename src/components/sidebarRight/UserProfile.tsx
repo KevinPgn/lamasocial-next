@@ -8,7 +8,8 @@ import { AddFriend } from "../utilitaire/AddFriend"
 
 export const UserProfile = ({ profileInformations, currentUserConnected }: { profileInformations: any, currentUserConnected?: any }) => {
   const isFollowing = profileInformations.isFollowing
-  
+  const isFriend = profileInformations.isFriend
+  console.log(isFriend)
   return <div className="w-full flex flex-col gap-3 shadow-md bg-white rounded-md p-4">
     <span className="text-sm font-semibold text-gray-500">User information</span>
     <div className="flex items-center gap-3">
@@ -47,7 +48,7 @@ export const UserProfile = ({ profileInformations, currentUserConnected }: { pro
         <EditProfile profileInformations={profileInformations}/>
       ) : (
         <div className="flex items-center gap-2 mt-3">
-          <AddFriend userId={profileInformations.id} />
+          <AddFriend userId={profileInformations.id} isFriend={isFriend} />
           <FollowBtn userId={profileInformations.id} isFollowing={isFollowing} />
         </div>
       )}
