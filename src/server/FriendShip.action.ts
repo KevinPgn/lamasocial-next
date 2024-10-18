@@ -31,148 +31,104 @@ model FriendRequest {
 }
 */
 
-export const addUserToFriend = authenticatedAction
+export const sendFriendRequest = authenticatedAction
   .schema(z.object({
-    userId: z.string()
+    userId: z.string(),
   }))
-  .action(async ({parsedInput:{userId}, ctx:{userId: currentUserId}}) => {
-    const user = await prisma.user.findUnique({
-      where:{
-        id:userId
+  .action(async ({parsedInput: {userId}, ctx:{userId: currentUserId}}) => {
+    // check if the user is already friends
+    const existingFriendShip = await prisma.friendShip.findFirst({
+      where: {
+        OR: [
+          { userId: currentUserId, friendId: userId },
+          { userId: userId, friendId: currentUserId },
+        ]
+      }
+    })
+
+    if(existingFriendShip) {
+      throw new Error("You are already friends")
+    }
+
+    // check if the friend request already exists
+    const existingFriendRequest = await prisma.friendRequest.findFirst({
+      where: {
+        OR: [
+          { senderId: currentUserId, receiverId: userId },
+          { senderId: userId, receiverId: currentUserId },
+        ]
+      }
+    })
+
+    if(existingFriendRequest) {
+      throw new Error("Friend request already sent")
+    }
+
+    await prisma.friendRequest.create({
+      data: {
+        senderId: currentUserId,
+        receiverId: userId,
+        status: "pending",
+      }
+    })
+
+    revalidatePath(`/profile/${userId}`)
+  })
+
+export const acceptTheFriendRequest = authenticatedAction
+  .schema(z.object({
+    userId: z.string(),
+  }))
+  .action(async ({parsedInput: {userId}, ctx:{userId: currentUserId}}) => {
+    await prisma.friendShip.create({
+      data: {
+        userId: currentUserId,
+        friendId: userId,
+      }
+    })
+
+    await prisma.friendRequest.delete({
+      where: {
+        senderId_receiverId: {
+          senderId: userId,
+          receiverId: currentUserId,
+        }
       }
     })
     
-    if(!user) {
-      return {
-        error: "User not found"
-      }
-    }
-
-    const createFriendsRequest = await prisma.friendRequest.create({
-      data:{
-        senderId: currentUserId,
-        receiverId: userId,
-        status: "pending"
-      }
-    })
-
-    return {
-      createFriendsRequest,
-      success: "Friend request created"
-    }
+    revalidatePath(`/profile/${userId}`)
   })
 
-export const acceptTheFriends = authenticatedAction
-  .schema(z.object({  
-    friendRequestId: z.string()
+export const rejectTheFriendRequest = authenticatedAction
+  .schema(z.object({
+    userId: z.string(),
   }))
-  .action(async ({parsedInput:{friendRequestId}, ctx:{userId: currentUserId}}) => {
-    const friendRequest = await prisma.friendRequest.findUnique({
-      where:{
-        id: friendRequestId
-      }
-    })
-
-    if(!friendRequest) {
-      return {
-        error: "Friend request not found"
-      }
-    }
-
-    if(friendRequest.receiverId !== currentUserId) {
-      return {
-        error: "You are not the receiver of this friend request"
-      }
-    }
-
-    const acceptTheFriends = await prisma.friendRequest.update({
-      where:{
-        id: friendRequestId
-      },
-      data:{
-        status: "accepted"
-      }
-    })
-
-    if(acceptTheFriends) {
-      const createFriendShip = await prisma.friendShip.create({
-        data:{
-          userId: currentUserId,
-          friendId: friendRequest.senderId
-        }
-      })
-
-      if(createFriendShip) {
-        return {
-          success: "Friendship created"
+  .action(async ({parsedInput: {userId}, ctx:{userId: currentUserId}}) => {
+    await prisma.friendRequest.delete({
+      where: {
+        senderId_receiverId: {
+          senderId: userId,
+          receiverId: currentUserId,
         }
       }
-    }
+    })
+
+    revalidatePath(`/profile/${userId}`)
   })
 
-export const denyTheFriends = authenticatedAction
+export const deleteTheFriendship = authenticatedAction
   .schema(z.object({
-    friendRequestId: z.string()
+    userId: z.string(),
   }))
-  .action(async ({parsedInput:{friendRequestId}, ctx:{userId: currentUserId}}) => {
-    const friendRequest = await prisma.friendRequest.findUnique({
-      where:{
-        id: friendRequestId
+  .action(async ({parsedInput: {userId}, ctx:{userId: currentUserId}}) => {
+    await prisma.friendShip.deleteMany({
+      where: {
+        OR: [
+          { userId: currentUserId, friendId: userId },
+          { userId: userId, friendId: currentUserId },
+        ]
       }
     })
 
-    if(!friendRequest) {
-      return {
-        error: "Friend request not found"
-      }
-    }
-
-    if(friendRequest.receiverId !== currentUserId) {
-      return {
-        error: "You are not the receiver of this friend request"
-      }
-    }
-
-    const deleteTheFriendsRequest = await prisma.friendRequest.delete({
-      where:{
-        id: friendRequestId
-      }
-    })
-
-    if(deleteTheFriendsRequest) {
-      return {
-        success: "Friend request denied"
-      }
-    }
-  })
-
-export const removeFriend = authenticatedAction
-  .schema(z.object({
-    friendId: z.string()
-  }))
-  .action(async ({parsedInput:{friendId}, ctx:{userId: currentUserId}}) => {
-    const friendShip = await prisma.friendShip.findFirst({
-      where:{
-        userId: currentUserId,
-        friendId: friendId
-      }
-    })
-
-    if(!friendShip) {
-      return {
-        error: "Friendship not found"
-      }
-    }
-
-    const removeFriend = await prisma.friendShip.delete({
-      where:{
-        id: friendShip.id
-      }
-    })
-
-    if(removeFriend) {
-      return {
-        success: "Friend removed"
-      }
-    }
+    revalidatePath(`/profile/${userId}`)
   })
