@@ -37,7 +37,7 @@ export const getUserProfile = cache(async (userId: string) => {
             ...(currentUserId ? {
                 followers: {
                     where: {
-                        followerId: currentUserId
+                        followerId: userId
                     }
                 }
             } : {}),

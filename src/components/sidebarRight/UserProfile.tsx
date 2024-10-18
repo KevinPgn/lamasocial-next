@@ -3,8 +3,11 @@ import { MapPin, GraduationCap, Briefcase, Link, Calendar } from "lucide-react"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { EditProfile } from "../utilitaire/EditProfile"
+import { FollowBtn } from "../utilitaire/FollowBtn"
 
 export const UserProfile = ({ profileInformations, currentUserConnected }: { profileInformations: any, currentUserConnected?: any }) => {
+  const isFollowing = profileInformations.isFollowing
+  
   return <div className="w-full flex flex-col gap-3 shadow-md bg-white rounded-md p-4">
     <span className="text-sm font-semibold text-gray-500">User information</span>
     <div className="flex items-center gap-3">
@@ -44,7 +47,7 @@ export const UserProfile = ({ profileInformations, currentUserConnected }: { pro
       ) : (
         <div className="flex items-center gap-2 mt-3">
           <Button className="w-[50%]">Add friend</Button>
-          <Button className="w-[50%]">Follow</Button>
+          <FollowBtn userId={profileInformations.id} isFollowing={isFollowing} />
         </div>
       )}
   </div>

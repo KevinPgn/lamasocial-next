@@ -13,8 +13,8 @@ export const followUser = authenticatedAction
         const existingFollow = await prisma.follow.findUnique({
             where: {
                 followerId_followingId: {
-                    followerId: currentUserId,
-                    followingId: userId,
+                    followerId: userId,
+                    followingId: currentUserId,
                 }
             }
         })
@@ -23,16 +23,16 @@ export const followUser = authenticatedAction
             await prisma.follow.delete({
                 where: {
                     followerId_followingId: {
-                        followerId: currentUserId,
-                        followingId: userId,
+                        followerId: userId,
+                        followingId: currentUserId,
                     }
                 }
             })
         } else {
             await prisma.follow.create({
                 data: {
-                    followerId: currentUserId,
-                    followingId: userId,
+                    followerId: userId,
+                    followingId: currentUserId,
                 }
             })
         }
