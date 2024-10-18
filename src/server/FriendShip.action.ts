@@ -4,32 +4,6 @@ import {z} from "zod"
 import { authenticatedAction } from "@/lib/safe-actions"
 import { revalidatePath } from "next/cache"
 import { cache } from "react"
-/*
-model FriendShip {
-  id String @id @default(cuid())
-  userId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  friendId String
-  friend User @relation("friends", fields: [friendId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model FriendRequest {
-  id         String   @id @default(cuid())
-  senderId   String
-  receiverId String
-  status     String   // Par exemple: "pending", "accepted", "rejected"
-  sender     User     @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
-  receiver   User     @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  @@unique([senderId, receiverId])
-}
-*/
 
 export const sendFriendRequest = authenticatedAction
   .schema(z.object({
@@ -90,8 +64,8 @@ export const acceptTheFriendRequest = authenticatedAction
     await prisma.friendRequest.delete({
       where: {
         senderId_receiverId: {
-          senderId: userId,
-          receiverId: currentUserId,
+          senderId: currentUserId,
+          receiverId: userId,
         }
       }
     })
@@ -107,8 +81,8 @@ export const rejectTheFriendRequest = authenticatedAction
     await prisma.friendRequest.delete({
       where: {
         senderId_receiverId: {
-          senderId: userId,
-          receiverId: currentUserId,
+          senderId: currentUserId,
+          receiverId: userId,
         }
       }
     })

@@ -2,6 +2,7 @@
 import { MapPin, GraduationCap, Briefcase, Link, Calendar } from "lucide-react"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
+import { EditProfile } from "../utilitaire/EditProfile"
 
 export const UserProfile = ({ profileInformations, currentUserConnected }: { profileInformations: any, currentUserConnected?: any }) => {
   return <div className="w-full flex flex-col gap-3 shadow-md bg-white rounded-md p-4">
@@ -38,8 +39,8 @@ export const UserProfile = ({ profileInformations, currentUserConnected }: { pro
        <p className="text-sm text-gray-500">Joined : {format(new Date(profileInformations.createdAt), "dd/MM/yyyy")}</p>
       </div>
     </div>
-      {currentUserConnected?.id === profileInformations.id ? (
-        <Button className="w-full mt-3">Edit profile</Button>
+      {currentUserConnected?.user?.id === profileInformations.id ? (
+        <EditProfile />
       ) : (
         <div className="flex items-center gap-2 mt-3">
           <Button className="w-[50%]">Add friend</Button>
