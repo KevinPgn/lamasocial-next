@@ -40,7 +40,7 @@ export const UserProfile = ({ profileInformations, currentUserConnected }: { pro
       </div>
     </div>
       {currentUserConnected?.user?.id === profileInformations.id ? (
-        <EditProfile />
+        <EditProfile profileInformations={profileInformations}/>
       ) : (
         <div className="flex items-center gap-2 mt-3">
           <Button className="w-[50%]">Add friend</Button>
