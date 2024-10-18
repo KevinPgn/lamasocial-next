@@ -141,11 +141,28 @@ export const getUserPosts = cache(async (userId: string) => {
     }))
 })
 
+export const getUserMedia = cache(async (userId: string) => {
+    const media = await prisma.post.findMany({
+        where: {
+            NOT: {
+                image: ""
+            },
+            authorId: userId
+        },
+        select: {
+            image: true,
+        }
+    })
+
+    return media
+})
+
 export const getUserProfileWithPosts = cache(async (userId: string) => {
-    const [profile, posts] = await Promise.all([
+    const [profile, posts, media] = await Promise.all([
         getUserProfile(userId),
-        getUserPosts(userId)
+        getUserPosts(userId),
+        getUserMedia(userId)
     ])
 
-    return { profile, posts }
+    return { profile, posts, media }
 })

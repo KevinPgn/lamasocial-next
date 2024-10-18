@@ -6,7 +6,7 @@ import { ProfileHome } from '@/components/profileHome/ProfileHome'
 
 const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
   const session = await getSession()
-  const { profile, posts } = await getUserProfileWithPosts(params.userId)
+  const { profile, posts, media } = await getUserProfileWithPosts(params.userId)
 
   return (
     <div className="flex max-w-[1500px] mx-auto gap-8 my-5">
@@ -16,7 +16,7 @@ const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
         <ProfileHome profileInformations={profile} posts={posts} currentUserConnected={session} />
       </main>
 
-      <SidebarRight profile={profile} currentUserConnected={session}/>
+      <SidebarRight profile={profile} currentUserConnected={session} postMedia={media}/>
     </div>
   )
 }
