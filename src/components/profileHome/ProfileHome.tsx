@@ -1,6 +1,7 @@
 import Image from "next/image"
+import { Post } from "../posts/Post"
 
-export const ProfileHome = ({ profileInformations, posts, currentUserId }: { profileInformations: any, posts: any, currentUserId: string }) => {
+export const ProfileHome = ({ profileInformations, posts, currentUserConnected }: { profileInformations: any, posts: any, currentUserConnected: any }) => {
   return <>
     <div className="relative w-full h-[270px] bg-gray-200 rounded-md">
         <Image src="/banner.jpg" alt="banner" fill className="object-cover h-full rounded-md" />
@@ -22,5 +23,9 @@ export const ProfileHome = ({ profileInformations, posts, currentUserId }: { pro
             <span className="text-sm font-medium text-gray-500">following</span>
         </div>
     </div>
+
+    {posts.map((post: any) => (
+        <Post key={post.id} post={post} currentUserConnected={currentUserConnected} />
+    ))}
   </>
 }

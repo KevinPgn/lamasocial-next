@@ -6,7 +6,6 @@ import { ProfileHome } from '@/components/profileHome/ProfileHome'
 
 const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
   const session = await getSession()
-  const currentUserId = session?.user?.id
   const { profile, posts } = await getUserProfileWithPosts(params.userId)
 
   return (
@@ -14,10 +13,10 @@ const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
       <SidebarLeft />
 
       <main className="w-full xl:w-[53%]">
-        <ProfileHome profileInformations={profile} posts={posts} currentUserId={currentUserId || ""} />
+        <ProfileHome profileInformations={profile} posts={posts} currentUserConnected={session} />
       </main>
 
-      <SidebarRight profile={profile} currentUserId={currentUserId}/>
+      <SidebarRight profile={profile} currentUserConnected={session}/>
     </div>
   )
 }

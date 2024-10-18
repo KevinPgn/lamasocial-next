@@ -5,7 +5,7 @@ import { FriendsRequests } from "./FriendsRequests"
 import {usePathname} from "next/navigation"
 import { UserProfile } from "./UserProfile"
 
-export const SidebarRight = ({ profile, currentUserId }: { profile?: any, currentUserId?: string }) => {
+export const SidebarRight = ({ profile, currentUserConnected }: { profile?: any, currentUserConnected?: any }) => {
   const pathname = usePathname()
 
   return <aside className="w-[27%] xl:flex flex-col gap-4 hidden">
@@ -16,7 +16,7 @@ export const SidebarRight = ({ profile, currentUserId }: { profile?: any, curren
       </>
     ) : null}
     {pathname.startsWith("/profile") && profile && (
-        <UserProfile profileInformations={profile} currentUserId={currentUserId} />
+        <UserProfile profileInformations={profile} currentUserConnected={currentUserConnected} />
       )}
     <Publicity />
   </aside>
