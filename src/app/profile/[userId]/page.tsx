@@ -2,6 +2,7 @@ import { SidebarLeft } from '@/components/sidebarLeft/SidebarLeft'
 import { SidebarRight } from '@/components/sidebarRight/SidebarRight'
 import { getUserProfileWithPosts } from '@/server/GetUserProfile.action'
 import { getSession } from '@/components/utils/CacheSession'
+import { ProfileHome } from '@/components/profileHome/ProfileHome'
 
 const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
   const session = await getSession()
@@ -13,7 +14,7 @@ const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
       <SidebarLeft />
 
       <main className="w-full xl:w-[53%]">
-        
+        <ProfileHome profileInformations={profile} posts={posts} currentUserId={currentUserId || ""} />
       </main>
 
       <SidebarRight profile={profile} currentUserId={currentUserId}/>
