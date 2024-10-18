@@ -1,4 +1,6 @@
 import { Check, X } from "lucide-react"
+import { DenyFriendRequest } from "../utilitaire/DenyFriendRequest"
+import { AcceptFriendRequest } from "../utilitaire/AcceptFriendRequest"
 
 export const FriendsRequests = ({friendsRequests}: {friendsRequests: any}) => {
   return <div className="w-full flex flex-col gap-3 shadow-md bg-white rounded-md p-4">
@@ -15,12 +17,8 @@ export const FriendsRequests = ({friendsRequests}: {friendsRequests: any}) => {
                 <span className="text-sm font-medium text-gray-500">{friendRequest.sender.name}</span>
             </div>
             <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-green-100 cursor-pointer hover:bg-green-200 duration-75">
-                    <Check size={17} className="text-green-500" />
-                </div>
-                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-red-100 cursor-pointer hover:bg-red-200 duration-75">
-                    <X size={17} className="text-red-500" />
-                </div>
+                <AcceptFriendRequest friendRequestId={friendRequest.id} />
+                <DenyFriendRequest friendRequestId={friendRequest.id} />
             </div>
         </div>
         ))}

@@ -51,43 +51,62 @@ export const sendFriendRequest = authenticatedAction
 
 export const acceptTheFriendRequest = authenticatedAction
   .schema(z.object({
-    userId: z.string(),
+    friendRequestId: z.string(),
   }))
-  .action(async ({parsedInput: {userId}, ctx:{userId: currentUserId}}) => {
+  .action(async ({parsedInput: {friendRequestId}, ctx:{userId: currentUserId}}) => {
+    // Fetch the friend request to get the sender's ID
+    const friendRequest = await prisma.friendRequest.findUnique({
+      where: { id: friendRequestId },
+      select: { senderId: true, receiverId: true }
+    })
+
+    if (!friendRequest) {
+      throw new Error("Friend request not found")
+    }
+
+    if (friendRequest.receiverId !== currentUserId) {
+      throw new Error("You are not authorized to accept this friend request")
+    }
+
+    // Create the friendship
     await prisma.friendShip.create({
       data: {
         userId: currentUserId,
-        friendId: userId,
+        friendId: friendRequest.senderId,
       }
     })
 
+    // Delete the friend request
     await prisma.friendRequest.delete({
-      where: {
-        senderId_receiverId: {
-          senderId: userId,
-          receiverId: currentUserId,
-        }
-      }
+      where: { id: friendRequestId }
     })
     
-    revalidatePath(`/profile/${userId}`)
+    revalidatePath(`/profile/${friendRequest.senderId}`)
   })
 
-export const rejectTheFriendRequest = authenticatedAction
+  export const rejectTheFriendRequest = authenticatedAction
   .schema(z.object({
-    userId: z.string(),
+    friendRequestId: z.string(),
   }))
-  .action(async ({parsedInput: {userId}, ctx:{userId: currentUserId}}) => {
-    await prisma.friendRequest.delete({
-      where: {
-        senderId_receiverId: {
-          senderId: userId,
-          receiverId: currentUserId,
-        }
-      }
+  .action(async ({parsedInput: {friendRequestId}, ctx:{userId: currentUserId}}) => {
+    const friendRequest = await prisma.friendRequest.findUnique({
+      where: { id: friendRequestId },
+      select: { senderId: true, receiverId: true }
     })
 
-    revalidatePath(`/profile/${userId}`)
+    if (!friendRequest) {
+      throw new Error("Friend request not found")
+    }
+
+    if (friendRequest.receiverId !== currentUserId) {
+      throw new Error("You are not authorized to reject this friend request")
+    }
+
+    await prisma.friendRequest.delete({
+      where: { id: friendRequestId }
+    })
+
+    revalidatePath(`/profile/${friendRequest.senderId}`)
   })
 
 export const deleteTheFriendship = authenticatedAction
@@ -116,6 +135,7 @@ export const deleteTheFriendship = authenticatedAction
           receiverId: userId,
         },
         select: {
+          id: true,
           sender: {
             select: {
               id: true,

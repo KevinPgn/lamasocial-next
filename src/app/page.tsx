@@ -11,7 +11,7 @@ export default async function Home() {
   const session = await getSession()
   const posts = await getAllPosts()
   const friendsRequests = await getAllFriendsRequests({})
-
+  console.log(friendsRequests?.data)
   return (
     <div className="flex max-w-[1500px] mx-auto gap-8 my-5">
       <SidebarLeft />
